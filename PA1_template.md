@@ -87,7 +87,7 @@ with(average_activity,
 
 ![](PA1_template_files/figure-html/average_activity_pattern-1.png)<!-- -->
 
-The time interval with maximum steps averaged across all days:
+Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
 
 ```r
@@ -183,20 +183,21 @@ weekday_vs_weekend <- imputed_data %>%
     as.POSIXlt(date)$wday == 6 ~ "weekend",
     TRUE ~ "weekday"))) %>%
   group_by(day_type, interval) %>%
-  summarise(total_steps = sum(steps))
+  summarise(average_steps = mean(steps))
 ```
 
 
 ```r
-ggplot(weekday_vs_weekend, aes(x = interval, y = total_steps)) +
+ggplot(weekday_vs_weekend, aes(x = interval, y = average_steps)) +
   facet_grid(day_type ~ .) +
   geom_line() +
-  xlab("Time Interval") + ylab("Total Steps") +
+  xlab("Time Interval") + ylab("Average Steps") +
   theme_bw()
 ```
 
 ![](PA1_template_files/figure-html/weekday_vs_weekend_pattern-1.png)<!-- -->
 
-On weekdays the number of steps are slightly higher than on the weekend.
-Particularly, the activity starts earlier with a peak at about 8-9am,
-which differs fundamentally to the weekend pattern.
+On weekdays the activity seems to start earlier and there is a peak at about 8-9am
+which is a bit more pronounced than on the weekend.
+On the weekend, the number of steps during the afternoon seems to be a but higher
+and the activity lasts a bit longer than on weekdays (after 8pm).
